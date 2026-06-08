@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bureau des Enquêtes - Cabinet Privé</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700;800&family=Montserrat:wght=300;400;600&display=swap');
+
+        :root {
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa7c11;
+            --bg-dark: #070708;
+            --bg-card: #121214;
+            --text-light: #e2e2e7;
+            --text-muted: #8e8e93;
+            --accent-red: #8b0000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 50% 15%, rgba(212, 175, 55, 0.07), transparent 60%),
+                radial-gradient(circle at 10% 80%, rgba(139, 0, 0, 0.04), transparent 40%);
+            padding-bottom: 30px;
+        }
+
+        /* En-tête */
+        header {
+            text-align: center;
+            padding: 50px 15px 30px 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            background: linear-gradient(to bottom, #000, var(--bg-dark));
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+
+        .bureau-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: transparent;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-primary), var(--gold-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-bottom: 6px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .bureau-subtitle {
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Container Principal */
+        .container {
+            width: 100%;
+            max-width: 480px; /* Parfaitement dimensionné pour les écrans de smartphones */
+            margin: 0 auto;
+            padding: 30px 20px;
+            flex-grow: 1;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Grille des Enquêtes */
+        .cases-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Liens globaux pour les cartes */
+        .case-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        /* Style de la Carte d'Enquête */
+        .case-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            position: relative;
+            
+            /* EFFET SCALE AU SURVOL (PC) */
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.35s ease, 
+                        box-shadow 0.35s ease;
+        }
+
+        /* Effet au survol (PC) */
+        .case-card:hover {
+            transform: scale(1.03);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+
+        /* EFFET DE TAP SOURIS / POUCE (Mobile & Clic) */
+        .case-card:active {
+            transform: scale(0.97); /* Effet d'enfoncement dynamique */
+            border-color: var(--gold-primary);
+            transition: transform 0.1s;
+        }
+
+        /* Bandeau Diagonale "TOP SECRET" */
+        .classified-ribbon {
+            position: absolute;
+            top: 18px;
+            left: -35px;
+            background: var(--accent-red);
+            color: #fff;
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 4px 35px;
+            transform: rotate(-45deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            letter-spacing: 2px;
+            z-index: 3;
+            border: 1px dashed rgba(255,255,255,0.3);
+            text-transform: uppercase;
+        }
+
+        /* Zone Visuelle de la Carte */
+        .case-image-wrapper {
+            position: relative;
+            height: 160px;
+            background-color: #050506;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Overlay sombre pour faire ressortir les badges */
+        .image-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(7, 7, 8, 0.2), rgba(7, 7, 8, 0.8));
+            z-index: 1;
+        }
+
+        /* Badge Statut de l'enquête */
+        .case-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(7, 7, 8, 0.9);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            font-family: 'Cinzel', serif;
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 3px;
+            z-index: 2;
+        }
+
+        .case-badge.locked {
+            border-color: #555;
+            color: var(--text-muted);
+        }
+
+        /* Contenu de l'enquête */
+        .case-content {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .case-meta {
+            font-size: 0.65rem;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .case-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.3;
+            transition: color 0.3s;
+        }
+
+        .case-card:hover .case-title {
+            color: var(--gold-light);
+        }
+
+        .case-description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        /* Section Progression */
+        .progress-container {
+            margin-top: 4px;
+            border-top: 1px solid rgba(212, 175, 55, 0.08);
+            padding-top: 14px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-label {
+            color: var(--text-muted);
+        }
+
+        .progress-percentage {
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%; /* Injecté dynamiquement en JS */
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary));
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+            border-radius: 3px;
+            transition: width 0.6s cubic-bezier(0.1, 0.8, 0.2, 1);
+        }
+
+        /* Textures graphiques d'ambiance */
+        .noir-overlay-1 {
+            background-image: linear-gradient(to bottom, rgba(12,12,14,0.1), rgba(12,12,14,0.95)), url('https://images.unsplash.com/photo-1505664194779-8bebcb95c557?q=80&w=600&auto=format&fit=crop');
+        }
+
+        .noir-overlay-2 {
+            background-image: linear-gradient(to bottom, rgba(12,12,14,0.1), rgba(12,12,14,0.95)), url('https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?q=80&w=600&auto=format&fit=crop');
+        }
+
+        .card-graphic {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0.15;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 2;
+        }
+
+        .case-card:hover .card-graphic {
+            opacity: 0.35;
+            transform: scale(1.08);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(212, 175, 55, 0.25);
+            font-size: 0.6rem;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            margin-top: auto;
+        }
+
+        /* Adaptabilité Tablettes / PC si besoin */
+        @media (min-width: 768px) {
+            .container { max-width: 850px; }
+            .cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        }
+    </style>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Enquêtes">
+    <link rel="apple-touch-icon" href="iphimage.png">
+    <link rel="icon" href="iphimage.png">
+    <link rel="manifest" href="manifest.json">
+    
+</head>
+<body>
+
+    <header>
+        <div class="bureau-title">Bureau des Enquêtes</div>
+        <div class="bureau-subtitle">Cabinet Privé — Accès Inspectrice</div>
+    </header>
+
+    <main class="container">
+        <h2 class="section-title">Dossiers Criminels</h2>
+
+        <div class="cases-grid">
+            
+            <!-- ENQUETE 1 : LE MEURTRE DE LORD ARTHUR -->
+            <!-- Le lien sera injecté dynamiquement par le JS pour reprendre là où le joueur en est -->
+            <a href="jusiane/debut.html" id="case1-link" class="case-link">
+                <div class="case-card">
+                    <div class="classified-ribbon">Classé S</div>
+                    <div class="case-image-wrapper noir-overlay-1">
+                        <div class="image-overlay"></div>
+                        <div class="case-badge" id="case1-badge">En Cours</div>
+                        <div class="card-graphic">
+                            <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="22" y1="12" x2="2" y2="12"></line>
+                                <line x1="12" y1="6" x2="12" y2="18"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">Dossier #0492</div>
+                        <h3 class="case-title">Le Meurtre de Lord Arthur</h3>
+                        <p class="case-description">Une riche figure de la gentry est retrouvée sans vie dans son manoir. Un crime parfait maquillé d'ombres et de secrets...</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <span class="progress-label" id="case1-resume-label">Progression</span>
+                                <span class="progress-percentage" id="case1-percentage">10%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="case1-progress-fill" style="width: 10%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- ENQUETE 2 : L'OMBRE DE L'OPÉRA (Locked until completion) -->
+            <a href="#" class="case-link" id="case2-link" onclick="handleLockedCaseClick(); return false;">
+                <div class="case-card" id="case2-card" style="opacity: 0.5;">
+                    <div class="case-image-wrapper noir-overlay-2">
+                        <div class="image-overlay"></div>
+                        <div class="case-badge locked">Verrouillé</div>
+                        <div class="card-graphic">
+                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#aa7c11" stroke-width="1">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="case-content">
+                        <div class="case-meta">Dossier #0514</div>
+                        <h3 class="case-title">L'Ombre de l'Opéra</h3>
+                        <p class="case-description">La cantatrice principale disparaît mystérieusement en plein milieu de l'acte III devant mille spectateurs impuissants...</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <span class="progress-label">Progression</span>
+                                <span class="progress-percentage">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <footer>
+        — Connexion Sécurisée —
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lecture de la progression réelle depuis le LocalStorage
+            // maxChapterUnlocked est stocké de 1 à 10 au fil du jeu
+            let maxChapter = parseInt(localStorage.getItem('maxChapterUnlocked')) || 0;
+            
+            // Si la progression n'existe pas encore, on initialise à 1 (Chapitre 1 accessible)
+            if (maxChapter === 0) {
+                maxChapter = 1;
+            }
+
+            // Calcul du pourcentage :
+            // Le jeu contient 10 Chapitres au total.
+            // On calcule le pourcentage en fonction du chapitre maximum atteint.
+            // S'il est au chapitre 10, il a 100% de progression une fois l'aventure résolue.
+            let progressPercentage = 0;
+            if (maxChapter === 1) {
+                // Le joueur débute (intro + chapitre 1 non résolu)
+                progressPercentage = 10;
+            } else if (maxChapter > 1 && maxChapter < 10) {
+                // Progression linéaire de 20% à 90%
+                progressPercentage = maxChapter * 10;
+            } else if (maxChapter >= 10) {
+                // Chapitre X atteint ou résolu
+                progressPercentage = 100;
+            }
+
+            // Sélection et mise à jour des éléments DOM de l'enquête 1
+            const percentageElement = document.getElementById('case1-percentage');
+            const progressFillElement = document.getElementById('case1-progress-fill');
+            const resumeLabelElement = document.getElementById('case1-resume-label');
+            const caseLinkElement = document.getElementById('case1-link');
+            const badgeElement = document.getElementById('case1-badge');
+
+            // Mise à jour de l'affichage du pourcentage de complétion
+            if (percentageElement && progressFillElement) {
+                percentageElement.innerText = progressPercentage + "%";
+                progressFillElement.style.width = progressPercentage + "%";
+            }
+
+            // Mise à jour dynamique du lien pour directement RESUMER l'aventure au bon endroit !
+            if (caseLinkElement) {
+                if (progressPercentage === 100) {
+                    badgeElement.innerText = "Résolu";
+                    badgeElement.style.borderColor = "var(--accent-green)";
+                    badgeElement.style.color = "var(--accent-green)";
+                    resumeLabelElement.innerText = "Terminé";
+                    // Si résolu, cliquer sur la carte renvoie au procès final
+                    caseLinkElement.href = "jusiane/chapitre10.html";
+                } else if (maxChapter > 1) {
+                    badgeElement.innerText = "En cours";
+                    resumeLabelElement.innerText = "Reprendre";
+                    // Le renvoie directement au chapitre en cours d'investigation
+                    caseLinkElement.href = "jusiane/chapitre" + maxChapter + ".html";
+                } else {
+                    badgeElement.innerText = "Nouveau";
+                    resumeLabelElement.innerText = "Commencer";
+                    // Nouveau joueur : on l'envoie sur l'introduction du manoir
+                    caseLinkElement.href = "jusiane/debut.html";
+                }
+            }
+
+            // Débloquer l'enquête 2 si l'enquête 1 est complétée à 100% !
+            const case2Card = document.getElementById('case2-card');
+            if (progressPercentage === 100 && case2Card) {
+                case2Card.style.opacity = "1";
+                const lockedBadge = case2Card.querySelector('.case-badge.locked');
+                if (lockedBadge) {
+                    lockedBadge.className = "case-badge";
+                    lockedBadge.innerText = "Disponible";
+                    lockedBadge.style.borderColor = "var(--gold-primary)";
+                    lockedBadge.style.color = "var(--gold-light)";
+                }
+            }
+        });
+
+        // Gestion de la modale ou de l'alerte pour l'enquête verrouillée
+        function handleLockedCaseClick() {
+            let maxChapter = parseInt(localStorage.getItem('maxChapterUnlocked')) || 1;
+            if (maxChapter >= 10) {
+                alert("Félicitations ! Vous avez résolu l'affaire Lord Arthur. Le Dossier de l'Opéra est en cours de préparation par Scotland Yard !");
+            } else {
+                alert("Ce dossier est actuellement classé SECRET.\n\nRésolvez l'enquête sur le meurtre de Lord Arthur (atteignez 100% de progression) pour débloquer cette nouvelle affaire.");
+            }
+        }
+    </script>
+</body>
+</html>

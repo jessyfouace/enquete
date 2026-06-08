@@ -1,0 +1,20 @@
+{
+  "name": "Enquêtes",
+  "short_name": "Enquêtes",
+  "display": "standalone",
+  "start_url": "./",
+  "background_color": "#070708",
+  "theme_color": "#070708",
+  "icons": [
+    {
+      "src": "iphimage.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "iphimage.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

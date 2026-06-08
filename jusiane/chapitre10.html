@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre X - Le Verdict Final</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700;800&family=Montserrat:wght=300;400;600&display=swap');
+
+        :root {
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa7c11;
+            --bg-dark: #070708;
+            --bg-card: #121214;
+            --text-light: #e2e2e7;
+            --text-muted: #8e8e93;
+            --accent-red: #ff4d4d;
+            --accent-green: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            background-image: radial-gradient(circle at 50% 15%, rgba(212, 175, 55, 0.04), transparent 60%);
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Effet carnet de détective */
+        .notebook-page {
+            background: #1c1c1f;
+            border-left: 6px solid var(--gold-primary);
+            border-radius: 4px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+        }
+
+        .select-custom {
+            appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%23d4af37' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <header class="p-[15px] border-b border-[rgba(212,175,55,0.1)] bg-black flex justify-between items-center relative z-[100]">
+        <button class="btn-menu text-[var(--gold-primary)] font-cinzel text-xs uppercase tracking-[1px] cursor-pointer" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number font-cinzel text-[var(--text-muted)] text-[0.8rem]">Chapitre X</div>
+        
+        <nav class="nav-overlay hidden absolute top-[100%] left-0 w-full bg-black border-b border-[rgba(212,175,55,0.2)] shadow-[0_10px_20px_rgba(0,0,0,0.8)] p-[15px] flex-col gap-2.5" id="navMenu">
+            <a href="../index.html" class="home-link block border-b border-[rgba(212,175,55,0.1)] text-[var(--gold-primary)] pb-3 mb-1 font-cinzel text-xs">🏠 Retourner à l'accueil</a>
+            <a href="chapitre1.html" id="link-ch1" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre I : Le Bureau</a>
+            <a href="chapitre2.html" id="link-ch2" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre II : Le Poison</a>
+            <a href="chapitre3.html" id="link-ch3" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre III : La Serre</a>
+            <a href="chapitre4.html" id="link-ch4" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre IV : L'Armurerie</a>
+            <a href="chapitre5.html" id="link-ch5" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre V : Le Secret</a>
+            <a href="chapitre6.html" id="link-ch6" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre VI : La Chambre</a>
+            <a href="chapitre7.html" id="link-ch7" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre VII : Les Souterrains</a>
+            <a href="chapitre8.html" id="link-ch8" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre VIII : Le Cabinet</a>
+            <a href="chapitre9.html" id="link-ch9" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre IX : L'Interrogatoire</a>
+            <a href="chapitre10.html" id="link-ch10" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre X : Le Verdict</a>
+            
+            <!-- Option de réinitialisation sécurisée dans le menu -->
+            <button id="resetMenuBtn" onclick="confirmReset('resetMenuBtn')" class="w-full text-left text-red-500 hover:text-red-400 text-xs p-2 rounded transition font-cinzel mt-2 border-t border-zinc-800 pt-3 flex items-center justify-between">
+                <span>⚠️ Réinitialiser l'enquête</span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="w-full max-w-[480px] mx-auto p-[20px_15px] flex-grow flex flex-col gap-6">
+        <section class="bg-[var(--bg-card)] border border-[rgba(212,175,55,0.1)] rounded-lg p-[22px] shadow-[0_8px_20px_rgba(0,0,0,0.5)] text-center">
+            <span class="evidence-tag">🏛️ Procès du Grand Salon</span>
+            <h2 class="font-cinzel text-white text-xl mb-3 border-b border-[rgba(212,175,55,0.1)] pb-1.5">Chapitre X : Le Verdict Final</h2>
+            <p class="text-[0.85rem] leading-[1.6] text-[var(--text-light)]">
+                La police attend tes conclusions. Tous les suspects sont alignés dans le salon, pâles de terreur. À l'aide de tes notes, établis ton ordonnance d'accusation indiscutable. Une seule erreur, et le vrai meurtrier s'échappera.
+            </p>
+        </section>
+
+        <!-- CARNET DE NOTES DES INDICES -->
+        <section class="bg-zinc-900 border border-zinc-800 rounded-lg p-5">
+            <h3 class="font-cinzel text-[var(--gold-primary)] text-xs uppercase tracking-wider mb-3 flex items-center gap-2">
+                📓 Carnet du Détective (Indices récoltés)
+            </h3>
+            <div id="clueContainer" class="flex flex-col gap-3 max-h-[180px] overflow-y-auto pr-1">
+                <!-- Rempli dynamiquement en JS -->
+            </div>
+        </section>
+
+        <!-- TABLEAU D'ACCUSATION INTERACTIF -->
+        <section class="bg-black border border-[rgba(212,175,55,0.3)] rounded-lg p-5 flex flex-col gap-5">
+            <h3 class="font-cinzel text-[var(--gold-primary)] text-sm uppercase tracking-wider text-center border-b border-zinc-800 pb-2">Tableau des Accusés</h3>
+
+            <!-- 1. Le Commanditaire -->
+            <div class="flex flex-col gap-1.5">
+                <label class="text-[11px] font-semibold text-[var(--gold-light)] uppercase tracking-wider">🧠 Qui a ordonné le meurtre (Commanditaire) ?</label>
+                <select id="accusedMastermind" class="select-custom bg-zinc-950 border border-zinc-800 rounded p-3 text-xs text-white font-cinzel tracking-wider cursor-pointer focus:outline-none focus:border-[var(--gold-primary)]">
+                    <option value="">Sélectionner un suspect</option>
+                    <option value="NESTOR">Nestor (Le demi-frère ruiné)</option>
+                    <option value="ELENA">Elena (La jeune épouse)</option>
+                    <option value="MORETTI">Dr. Moretti (Le médecin)</option>
+                    <option value="VICTOR">Victor (Le majordome)</option>
+                </select>
+            </div>
+
+            <!-- 2. L'Exécuteur -->
+            <div class="flex flex-col gap-1.5">
+                <label class="text-[11px] font-semibold text-[var(--gold-light)] uppercase tracking-wider">🧪 Qui a concrètement versé le poison (Exécuteur) ?</label>
+                <select id="accusedKiller" class="select-custom bg-zinc-950 border border-zinc-800 rounded p-3 text-xs text-white font-cinzel tracking-wider cursor-pointer focus:outline-none focus:border-[var(--gold-primary)]">
+                    <option value="">Sélectionner un suspect</option>
+                    <option value="NESTOR">Nestor (Le demi-frère ruiné)</option>
+                    <option value="ELENA">Elena (La jeune épouse)</option>
+                    <option value="MORETTI">Dr. Moretti (Le médecin)</option>
+                    <option value="VICTOR">Victor (Le majordome)</option>
+                </select>
+            </div>
+
+            <!-- 3. Le Complice Passif -->
+            <div class="flex flex-col gap-1.5">
+                <label class="text-[11px] font-semibold text-[var(--gold-light)] uppercase tracking-wider">🤫 Qui a vu le crime et s'est tu par cupidité ?</label>
+                <select id="accusedComplice" class="select-custom bg-zinc-950 border border-zinc-800 rounded p-3 text-xs text-white font-cinzel tracking-wider cursor-pointer focus:outline-none focus:border-[var(--gold-primary)]">
+                    <option value="">Sélectionner un suspect</option>
+                    <option value="NONE">Personne d'autre</option>
+                    <option value="NESTOR">Nestor (Le demi-frère ruiné)</option>
+                    <option value="ELENA">Elena (La jeune épouse)</option>
+                    <option value="MORETTI">Dr. Moretti (Le médecin)</option>
+                    <option value="VICTOR">Victor (Le majordome)</option>
+                </select>
+            </div>
+
+            <!-- 4. L'Arme du crime -->
+            <div class="flex flex-col gap-1.5">
+                <label class="text-[11px] font-semibold text-[var(--gold-light)] uppercase tracking-wider">🗡️ Quelle était l'arme du crime exacte ?</label>
+                <select id="accusedWeapon" class="select-custom bg-zinc-950 border border-zinc-800 rounded p-3 text-xs text-white font-cinzel tracking-wider cursor-pointer focus:outline-none focus:border-[var(--gold-primary)]">
+                    <option value="">Sélectionner l'arme du crime</option>
+                    <option value="COUTEAU">Un poignard d'apparat</option>
+                    <option value="CIGUE">La Ciguë (poison paralysant)</option>
+                    <option value="ARSENIC">L'Arsenic (mort-aux-rats)</option>
+                </select>
+            </div>
+
+            <button onclick="renderVerdict()" class="bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold-primary)] text-black font-cinzel font-bold py-4 rounded-lg uppercase text-xs tracking-widest mt-2 hover:brightness-110 active:scale-[0.98] transition">
+                ⚖️ Rendre le Verdict final
+            </button>
+        </section>
+
+        <!-- Bouton discret de réinitialisation sous le tableau -->
+        <div class="text-center">
+            <button id="resetPageBtn" onclick="confirmReset('resetPageBtn')" class="text-zinc-600 hover:text-red-400 font-cinzel text-[10px] uppercase tracking-widest cursor-pointer transition py-2">
+                ⚠️ Réinitialiser l'aventure et effacer les indices
+            </button>
+        </div>
+    </main>
+
+    <!-- Écran de Fin (Modale) -->
+    <div class="hidden fixed top-0 left-0 w-full h-full bg-black/95 z-[1000] justify-center items-center p-5" id="verdictModal">
+        <div class="bg-[var(--bg-card)] border-2 border-[var(--gold-primary)] rounded-xl max-w-[440px] w-full p-[30px_20px] text-center shadow-[0_0_30px_rgba(212,175,55,0.3)]">
+            <h2 class="font-cinzel text-xl mb-4" id="modalTitle">Verdict rendu</h2>
+            
+            <p id="modalResultText" class="text-xs text-[var(--text-light)] leading-[1.6] mb-6 text-left p-4 notebook-page">
+                <!-- Texte de dénouement dynamique -->
+            </p>
+
+            <div class="flex gap-3 justify-center">
+                <button id="btnAction" class="bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold-primary)] text-black font-cinzel font-bold px-6 py-3 rounded uppercase text-[0.8rem] transition hover:opacity-90 cursor-pointer">
+                    Retourner à l'accueil
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let audioCtx = null;
+        function playTone(freq, type, duration) {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        function playChord(isSuccess) {
+            if (isSuccess) {
+                playTone(440, 'sine', 0.1);
+                setTimeout(() => playTone(554.37, 'sine', 0.1), 100);
+                setTimeout(() => playTone(659.25, 'sine', 0.1), 200);
+                setTimeout(() => playTone(880, 'sine', 0.5), 300);
+            } else {
+                playTone(180, 'sawtooth', 0.3);
+                setTimeout(() => playTone(160, 'sawtooth', 0.3), 150);
+                setTimeout(() => playTone(120, 'sawtooth', 0.6), 300);
+            }
+        }
+
+        // Chargement des indices collectés dans les chapitres d'avant
+        window.addEventListener('DOMContentLoaded', () => {
+            updateProgression(10);
+            displayGatheredClues();
+        });
+
+        function updateProgression(currentChapter) {
+            let maxUnlocked = localStorage.getItem('maxChapterUnlocked') || 1;
+            if (currentChapter > maxUnlocked) {
+                localStorage.setItem('maxChapterUnlocked', currentChapter);
+                maxUnlocked = currentChapter;
+            }
+            for (let i = 1; i <= 10; i++) {
+                const link = document.getElementById(`link-ch${i}`);
+                if (link) {
+                    link.style.display = (i <= maxUnlocked) ? "block" : "none";
+                }
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('navMenu');
+            const btn = document.querySelector('.btn-menu');
+            if (event.target !== menu && event.target !== btn && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+        });
+
+        // Lecture des indices depuis le local storage
+        function displayGatheredClues() {
+            const clueContainer = document.getElementById('clueContainer');
+            
+            // Dictionnaire des indices pré-remplis pour parer au cas où l'utilisateur commence directement au chapitre 10
+            const defaultClues = {
+                1: "Testament d'Arthur : il léguait toute sa fortune à Elena et déshéritait totalement Nestor.",
+                5: "Dettes de jeu colossales de Victor (50 000 £) envers Nestor.",
+                6: "Appartements d'Elena : lettre secrète révélant sa liaison adultère avec le Dr. Moretti.",
+                7: "Reconnaissances de dettes de Victor trouvées dans les souterrains secrets.",
+                8: "Moretti signale la disparition de sa fiole médicale de Ciguë.",
+                9: "Aveux de Victor : menacé par Nestor pour ses dettes, Elena a vu la fiole mais s'est tue pour l'argent."
+            };
+
+            for (let ch = 1; ch <= 9; ch++) {
+                // On vérifie s'il y a un indice stocké ou on utilise le texte par défaut
+                let storedClue = localStorage.getItem(`indice_chapitre${ch}`);
+                let clueText = storedClue || defaultClues[ch];
+
+                if (clueText) {
+                    const clueDiv = document.createElement('div');
+                    clueDiv.className = "bg-black/30 border border-zinc-800 p-2.5 rounded text-[11px] leading-relaxed text-zinc-300 flex items-start gap-2";
+                    clueDiv.innerHTML = `
+                        <span class="text-[var(--gold-primary)] font-bold">Ch. ${ch}</span>
+                        <div>${clueText}</div>
+                    `;
+                    clueContainer.appendChild(clueDiv);
+                }
+            }
+
+            if (clueContainer.children.length === 0) {
+                clueContainer.innerHTML = `<p class="text-[11px] text-zinc-500 text-center">Aucun indice récolté pour le moment.</p>`;
+            }
+        }
+
+        // Système de réinitialisation sécurisé en deux étapes (conforme anti-alert/confirm)
+        let resetStates = {
+            'resetMenuBtn': { step: 0, defaultHtml: '<span>⚠️ Réinitialiser l\'enquête</span>', activeHtml: '<span>🔥 Confirmer la suppression ?</span>' },
+            'resetPageBtn': { step: 0, defaultHtml: '⚠️ Réinitialiser l\'aventure et effacer les indices', activeHtml: '🔥 CONFIRMER LA RÉINITIALISATION ?' }
+        };
+
+        function confirmReset(btnId) {
+            const btn = document.getElementById(btnId);
+            const state = resetStates[btnId];
+            if (!btn || !state) return;
+
+            if (state.step === 0) {
+                state.step = 1;
+                btn.innerHTML = state.activeHtml;
+                btn.classList.add('text-orange-500');
+                btn.classList.remove('text-red-500', 'text-zinc-600');
+                
+                // Réinitialisation de l'état après 4 secondes sans action
+                setTimeout(() => {
+                    if (state.step === 1) {
+                        state.step = 0;
+                        btn.innerHTML = state.defaultHtml;
+                        btn.classList.remove('text-orange-500', 'text-red-500');
+                        if (btnId === 'resetPageBtn') {
+                            btn.classList.add('text-zinc-600');
+                        } else {
+                            btn.classList.add('text-red-500');
+                        }
+                    }
+                }, 4000);
+            } else if (state.step === 1) {
+                // Actions de suppression définitive de la sauvegarde
+                localStorage.removeItem('maxChapterUnlocked');
+                for (let i = 1; i <= 9; i++) {
+                    localStorage.removeItem(`indice_chapitre${i}`);
+                }
+                window.location.href = "../index.html";
+            }
+        }
+
+        function renderVerdict() {
+            const mastermind = document.getElementById('accusedMastermind').value;
+            const killer = document.getElementById('accusedKiller').value;
+            const complice = document.getElementById('accusedComplice').value;
+            const weapon = document.getElementById('accusedWeapon').value;
+
+            const modal = document.getElementById('verdictModal');
+            const title = document.getElementById('modalTitle');
+            const resultText = document.getElementById('modalResultText');
+            const btn = document.getElementById('btnAction');
+
+            if (!mastermind || !killer || !complice || !weapon) {
+                playChord(false);
+                title.innerText = "❌ Enquête Incomplète";
+                title.className = "font-cinzel text-xl text-[var(--accent-red)] mb-4";
+                resultText.innerText = "Vous devez remplir l'ensemble du rapport judiciaire d'accusation pour ordonner le verdict final.";
+                btn.innerText = "Retourner au bureau";
+                btn.onclick = () => modal.classList.add('hidden');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                return;
+            }
+
+            // SOLUTION ATTENDUE : 
+            // Commanditaire (Mastermind) = Nestor (a manipulé Victor avec ses dettes)
+            // Exécuteur (Killer) = Victor (a versé le poison dans le thé d'Arthur)
+            // Complice = Elena (a gardé le silence car elle voulait hériter de la fortune d'Arthur)
+            // Arme (Weapon) = CIGUE (La ciguë volée au cabinet)
+
+            if (mastermind === "NESTOR" && killer === "VICTOR" && complice === "ELENA" && weapon === "CIGUE") {
+                // FIN PARFAITE : Victoire totale
+                playChord(true);
+                title.innerText = "🏆 VERDICT PARFAIT : Vérité révélée";
+                title.className = "font-cinzel text-lg text-[var(--accent-green)] mb-4 font-bold uppercase tracking-wider";
+                resultText.innerHTML = `
+                    Devant vos preuves indiscutables, l'inspecteur de Scotland Yard fait retentir les menottes dans le grand salon.<br><br>
+                    <strong>Nestor</strong>, acculé, s'effondre en apprenant que vous avez décrypté ses reconnaissances de dettes et ses menaces.<br>
+                    <strong>Victor</strong> avoue en larmes : il a versé les doses mortelles de <strong>Ciguë</strong> volées au docteur Moretti dans le thé de Lord Arthur pour effacer son ardoise de 50 000 £.<br>
+                    <strong>Elena</strong>, glaciale, est arrêtée en tant que complice passive : elle savait pour la fiole et a délibérément laissé Victor agir pour capter l'héritage d'Arthur tout en poursuivant sa liaison avec Moretti.<br><br>
+                    La presse titre le lendemain : <strong>"Un détective légendaire démantèle le complot du Manoir"</strong>. Votre réputation est immortelle !
+                `;
+                btn.innerText = "Retourner à l'accueil";
+                btn.onclick = () => {
+                    window.location.href = "../index.html";
+                };
+            } else {
+                // ÉCHEC : Mauvaise imputation
+                playChord(false);
+                title.innerText = "❌ ERREUR JUDICIAIRE : Le Drame";
+                title.className = "font-cinzel text-lg text-[var(--accent-red)] mb-4 font-bold uppercase tracking-wider";
+                
+                let explanation = "La police a suivi votre ordonnance d'accusation, mais les preuves n'ont pas tenu face au juge d'instruction ! ";
+                
+                if (weapon !== "CIGUE") {
+                    explanation += "L'arme que vous avez choisie ne correspond pas aux résidus chimiques trouvés dans l'éprouvette du Docteur ni dans le sang d'Arthur ! ";
+                } else if (mastermind !== "NESTOR") {
+                    explanation += "Le commanditaire présumé s'est défendu avec brio. Vous avez négligé le mobile financier de l'héritage de Nestor et son emprise de dettes ! ";
+                } else if (killer !== "VICTOR") {
+                    explanation += "La personne accusée d'avoir versé le poison disposait d'un alibi solide à l'heure exacte du thé de 20 heures, contredisant vos conclusions ! ";
+                } else if (complice !== "ELENA") {
+                    explanation += "Vous avez manqué de clairvoyance sur l'attitude suspecte de l'épouse d'Arthur et de son silence complice ! ";
+                }
+
+                explanation += "<br><br>Le vrai coupable s'enfuit du manoir et votre réputation d'enquêteur est anéantie.";
+                
+                resultText.innerHTML = explanation;
+                btn.innerText = "Réviser le rapport";
+                btn.onclick = () => modal.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre VIII - Le Cabinet du Docteur Moretti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700;800&family=Montserrat:wght=300;400;600&display=swap');
+
+        :root {
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa7c11;
+            --bg-dark: #070708;
+            --bg-card: #121214;
+            --text-light: #e2e2e7;
+            --text-muted: #8e8e93;
+            --accent-red: #ff4d4d;
+            --accent-green: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            background-image: radial-gradient(circle at 50% 15%, rgba(212, 175, 55, 0.04), transparent 60%);
+        }
+
+        .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+
+        .test-tube-container {
+            width: 75px;
+            height: 190px;
+            border: 4px solid #4a5568;
+            border-top: none;
+            border-radius: 0 0 38px 38px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
+        }
+
+        .test-tube-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            transition: height 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.5s ease;
+            border-radius: 0 0 34px 34px;
+        }
+
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            bottom: -10px;
+            animation: floatUp 3s infinite ease-in;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-170px) scale(0.4); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <header class="p-[15px] border-b border-[rgba(212,175,55,0.1)] bg-black flex justify-between items-center relative z-[100]">
+        <button class="btn-menu text-[var(--gold-primary)] font-cinzel text-xs uppercase tracking-[1px] cursor-pointer" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number font-cinzel text-[var(--text-muted)] text-[0.8rem]">Chapitre VIII</div>
+        
+        <nav class="nav-overlay hidden absolute top-[100%] left-0 w-full bg-black border-b border-[rgba(212,175,55,0.2)] shadow-[0_10px_20px_rgba(0,0,0,0.8)] p-[15px] flex-col gap-2.5" id="navMenu">
+            <a href="../index.html" class="home-link block border-b border-[rgba(212,175,55,0.1)] text-[var(--gold-primary)] pb-3 mb-1 font-cinzel text-xs">🏠 Retour à l'accueil</a>
+            <a href="chapitre1.html" id="link-ch1" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre I : Le Bureau</a>
+            <a href="chapitre2.html" id="link-ch2" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre II : Le Poison</a>
+            <a href="chapitre3.html" id="link-ch3" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre III : La Serre</a>
+            <a href="chapitre4.html" id="link-ch4" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre IV : L'Armurerie</a>
+            <a href="chapitre5.html" id="link-ch5" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre V : Le Secret</a>
+            <a href="chapitre6.html" id="link-ch6" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre VI : La Chambre</a>
+            <a href="chapitre7.html" id="link-ch7" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre VII : Les Souterrains</a>
+            <a href="chapitre8.html" id="link-ch8" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre VIII : Le Cabinet</a>
+            <a href="chapitre9.html" id="link-ch9" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre IX : L'Interrogatoire</a>
+            <a href="chapitre10.html" id="link-ch10" class="hidden text-[var(--text-light)] hover:text-[var(--gold-light)] text-xs p-2 rounded transition font-cinzel">• Chapitre X : Le Verdict</a>
+        </nav>
+    </header>
+
+    <main class="w-full max-w-[480px] mx-auto p-[20px_15px] flex-grow flex flex-col gap-5">
+        <section class="bg-[var(--bg-card)] border border-[rgba(212,175,55,0.1)] rounded-lg p-[22px] shadow-[0_8px_20px_rgba(0,0,0,0.5)]">
+            <span class="evidence-tag">🔬 Laboratoire de Moretti</span>
+            <h2 class="font-cinzel text-white text-xl mb-3 border-b border-[rgba(212,175,55,0.1)] pb-1.5">Chapitre VIII : Le Cabinet Médical</h2>
+            <p class="text-[0.9rem] leading-[1.6] text-[var(--text-light)]">
+                La trappe des souterrains t'amène directement derrière une bibliothèque pivotante. Tu te retrouves dans le cabinet privé du <strong>Docteur Moretti</strong>.
+                <br><br>
+                Sur son bureau de chimie, un analyseur de réactifs verrouille le tiroir contenant le carnet de santé secret de Lord Arthur. Pour déverrouiller ce tiroir secret, tu dois injecter un mélange précis à partir d'instructions codées retrouvées dans le carnet d'alchimie du docteur.
+            </p>
+        </section>
+
+        <section class="bg-black border border-[rgba(212,175,55,0.3)] rounded-lg p-5 flex flex-col items-center gap-5 relative">
+            
+            <div class="w-full bg-[#111] border border-zinc-800 p-4 rounded-lg text-xs leading-[1.5] text-[#f4edd2]">
+                <strong class="font-cinzel text-[var(--gold-primary)] text-sm block mb-2">📜 Protocole de Stabilisation :</strong>
+                "Le récepteur chimique requiert un équilibre mathématique parfait :<br>
+                • Le mélange doit faire **exactement 8 doses** au total.<br>
+                • Chaque réactif (Rouge, Bleu, Jaune) doit être présent **au moins une fois**.<br>
+                • La quantité de **Bleu** doit correspondre exactement à la somme des quantités de **Rouge** et de **Jaune**.<br>
+                • La quantité de **Jaune** doit être **strictement inférieure** à celle de **Rouge**."
+            </div>
+
+            <div class="flex gap-8 justify-center items-center w-full my-2">
+                <!-- Objectif couleur -->
+                <div class="flex flex-col items-center gap-2">
+                    <span class="text-xs text-[var(--text-muted)] font-cinzel">Teinte Cible</span>
+                    <div class="w-14 h-14 rounded-full border-2 border-white shadow-[0_0_15px_rgba(150,110,150,0.8)]" style="background-color: rgb(150, 110, 150);"></div>
+                    <span class="text-[10px] text-[var(--gold-primary)] font-cinzel tracking-widest text-center">FIOLE COMPROMISE</span>
+                </div>
+
+                <!-- Éprouvette réactive -->
+                <div class="flex flex-col items-center gap-2">
+                    <span class="text-xs text-[var(--text-muted)] font-cinzel">Ton Éprouvette</span>
+                    <div class="test-tube-container">
+                        <div class="test-tube-liquid" id="tubeLiquid" style="background-color: transparent;">
+                            <div class="bubble w-1 h-1 left-2" style="animation-delay: 0.2s;"></div>
+                            <div class="bubble w-1.5 h-1.5 left-5" style="animation-delay: 0.8s;"></div>
+                            <div class="bubble w-1 h-1 left-10" style="animation-delay: 1.5s;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Affichage des doses actuelles -->
+            <div class="w-full flex justify-around text-xs font-cinzel border-y border-zinc-800 py-2 my-1 text-center">
+                <div><span class="text-[#ef4444]">Rouge:</span> <strong id="redCount">0</strong></div>
+                <div><span class="text-[#3b82f6]">Bleu:</span> <strong id="blueCount">0</strong></div>
+                <div><span class="text-[#f59e0b]">Jaune:</span> <strong id="yellowCount">0</strong></div>
+                <div><span class="text-white">Total:</span> <strong id="totalCount">0</strong> / 8</div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3.5 w-full">
+                <button class="bg-[#ef4444] text-white font-cinzel text-[0.75rem] py-3.5 rounded-lg border border-[#f87171] active:scale-95 transition-all text-center tracking-[0.5px] shadow-[0_4px_10px_rgba(239,68,68,0.3)] font-semibold" onclick="addReagent('red')">
+                    + ROUGE
+                </button>
+                <button class="bg-[#3b82f6] text-white font-cinzel text-[0.75rem] py-3.5 rounded-lg border border-[#60a5fa] active:scale-95 transition-all text-center tracking-[0.5px] shadow-[0_4px_10px_rgba(59,130,246,0.3)] font-semibold" onclick="addReagent('blue')">
+                    + BLEU
+                </button>
+                <button class="bg-[#f59e0b] text-white font-cinzel text-[0.75rem] py-3.5 rounded-lg border border-[#fbbf24] active:scale-95 transition-all text-center tracking-[0.5px] shadow-[0_4px_10px_rgba(245,158,11,0.3)] font-semibold" onclick="addReagent('yellow')">
+                    + JAUNE
+                </button>
+            </div>
+
+            <div class="w-full flex gap-3">
+                <button class="border border-dashed border-[var(--gold-dark)] text-[var(--gold-light)] py-2 px-3 text-[10px] rounded uppercase tracking-wider flex-1 active:scale-98 transition text-center" onclick="toggleHint()">
+                    💡 Indice Logique
+                </button>
+                <button class="border border-dashed border-[var(--accent-red)] text-[var(--accent-red)] py-2 px-3 text-[10px] rounded uppercase tracking-wider flex-1 active:scale-98 transition text-center" onclick="clearBeaker()">
+                    🗑️ Vider l'éprouvette
+                </button>
+            </div>
+
+            <!-- Boîte d'indice cachée -->
+            <div id="hintBox" class="hidden w-full bg-[#111] p-3 border border-dashed border-zinc-700 rounded text-xs text-zinc-400">
+                📌 Résolvons le système :<br>
+                1. $R + B + J = 8$ (Total de 8 doses)<br>
+                2. Chaque ingrédient est présent au moins une fois ($\ge 1$).<br>
+                3. On sait que $B = R + J$. Remplaçons $R + J$ par $B$ dans la première équation : $B + B = 8 \implies 2B = 8 \implies B = 4$.<br>
+                4. Il reste à trouver $R$ et $J$ tels que $R + J = 4$.<br>
+                5. On a aussi la contrainte $J < R$ et chaque ingrédient doit être $\ge 1$.<br>
+                - Si $J=2$, alors $R=2$, mais $2 < 2$ est faux.<br>
+                - Si $J=1$, alors $R=3$, et $1 < 3$ est vrai !<br>
+                La seule combinaison exacte est : **3 Rouge, 4 Bleu, 1 Jaune**.
+            </div>
+        </section>
+    </main>
+
+    <!-- Écran des indices récoltés -->
+    <div class="hidden fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.95)] z-[1000] justify-center items-center p-5" id="clueScreen">
+        <div class="bg-[var(--bg-card)] border-2 border-[var(--gold-primary)] rounded-xl max-w-[440px] w-full p-[30px_20px] text-center shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+            <h2 class="font-cinzel text-[var(--gold-light)] text-[1.4rem] mb-3.5">📜 Fiche Médicale Dérobée !</h2>
+            <p class="text-xs text-[var(--text-muted)] mb-[15px]">Le tiroir du meuble s'ouvre dans un déclic de piston. Tu y découvres le journal de bord confidentiel du Docteur Moretti :</p>
+            
+            <div class="bg-[#f4edd2] text-[#1a1a1a] p-[18px] rounded font-cinzel text-[0.85rem] leading-[1.5] text-left mb-5 border-l-[5px] border-[var(--gold-dark)] shadow-[inset_0_0_10px_rgba(0,0,0,0.1)]">
+                "Note confidentielle :<br>
+                Ma fiole de Ciguë médicale a mystérieusement disparu de mon meuble blindé. Seul le majordome Victor, qui m'aidait parfois à ranger, aurait pu noter mes habitudes de clés. De plus, j'ai surpris une conversation tendue entre Elena et lui. Victor semblait terrorisé, implorant Elena de ne rien dire à Arthur à propos de ses dettes... et Elena lui a souri froidement, promettant son silence s'il finissait ce qu'il avait commencé."
+            </div>
+
+            <p class="text-[0.85rem] text-[var(--text-light)] mb-5 leading-[1.4]">
+                <strong>Analyse du Détective :</strong> Incroyable ! Victor a volé le poison sous la pression de Nestor, mais Elena a sciemment laissé faire pour toucher la fortune. L'étau se resserre sur Victor comme exécuteur et Nestor comme maître chanteur !
+            </p>
+            <button class="bg-gradient-to-r from-[var(--gold-dark)] to-[var(--gold-primary)] text-black font-cinzel font-bold p-[12px_30px] rounded uppercase text-[0.9rem] transition hover:opacity-90 inline-block cursor-pointer" onclick="goToNextChapter()">
+                Continuer l'enquête
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let mix = { red: 0, blue: 0, yellow: 0 };
+        
+        let audioCtx = null;
+        function playTone(freq, type, duration) {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.005, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        updateProgression(8);
+
+        function updateProgression(currentChapter) {
+            let maxUnlocked = localStorage.getItem('maxChapterUnlocked') || 1;
+            if (currentChapter > maxUnlocked) {
+                localStorage.setItem('maxChapterUnlocked', currentChapter);
+                maxUnlocked = currentChapter;
+            }
+            for (let i = 1; i <= 10; i++) {
+                const link = document.getElementById(`link-ch${i}`);
+                if (link) {
+                    link.style.display = (i <= maxUnlocked) ? "block" : "none";
+                }
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('navMenu');
+            const btn = document.querySelector('.btn-menu');
+            if (event.target !== menu && event.target !== btn && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+        });
+
+        function toggleHint() {
+            const hintBox = document.getElementById('hintBox');
+            hintBox.classList.toggle('hidden');
+        }
+
+        // Ajouter une dose de réactif
+        function addReagent(color) {
+            playTone(600, 'sine', 0.1);
+            
+            const total = mix.red + mix.blue + mix.yellow;
+            if (total >= 8) {
+                playTone(150, 'sawtooth', 0.2);
+                return;
+            }
+
+            mix[color]++;
+            updateBeakerUI();
+            checkVictory();
+        }
+
+        function updateBeakerUI() {
+            const tube = document.getElementById('tubeLiquid');
+            const total = mix.red + mix.blue + mix.yellow;
+            
+            document.getElementById('redCount').innerText = mix.red;
+            document.getElementById('blueCount').innerText = mix.blue;
+            document.getElementById('yellowCount').innerText = mix.yellow;
+            document.getElementById('totalCount').innerText = total;
+
+            if (total === 0) {
+                tube.style.height = '0%';
+                tube.style.backgroundColor = 'transparent';
+                return;
+            }
+
+            // Calcul du niveau de l'éprouvette (8 doses = 100%)
+            tube.style.height = `${(total / 8) * 100}%`;
+
+            // Calcul du mélange de couleurs dynamiques (RGB)
+            // Rouge pur: (239, 68, 68) | Bleu pur: (59, 130, 246) | Jaune pur: (245, 158, 11)
+            let r = Math.round((mix.red * 239 + mix.blue * 59 + mix.yellow * 245) / total);
+            let g = Math.round((mix.red * 68 + mix.blue * 130 + mix.yellow * 158) / total);
+            let b = Math.round((mix.red * 68 + mix.blue * 246 + mix.yellow * 11) / total);
+
+            tube.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function clearBeaker() {
+            playTone(250, 'triangle', 0.15);
+            mix = { red: 0, blue: 0, yellow: 0 };
+            updateBeakerUI();
+        }
+
+        function checkVictory() {
+            // Solution attendue d'après la logique : 3 Rouge, 4 Bleu, 1 Jaune
+            if (mix.red === 3 && mix.blue === 4 && mix.yellow === 1) {
+                playTone(440, 'sine', 0.1);
+                setTimeout(() => playTone(554.37, 'sine', 0.1), 100);
+                setTimeout(() => playTone(659.25, 'sine', 0.1), 200);
+                setTimeout(() => playTone(880, 'sine', 0.4), 300);
+
+                setTimeout(() => {
+                    localStorage.setItem('indice_chapitre8', 'Dr. Moretti journal : la ciguë a été dérobée par Victor, sous l\'oeil complice d\'Elena qui voulait l\'héritage.');
+                    document.getElementById('clueScreen').classList.remove('hidden');
+                    document.getElementById('clueScreen').classList.add('flex');
+                }, 1000);
+            }
+        }
+
+        function goToNextChapter() {
+            let maxUnlocked = parseInt(localStorage.getItem('maxChapterUnlocked') || 8);
+            if (maxUnlocked < 9) {
+                localStorage.setItem('maxChapterUnlocked', 9);
+            }
+            window.location.href = "chapitre9.html";
+        }
+    </script>
+</body>
+</html>

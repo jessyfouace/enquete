@@ -1,0 +1,39 @@
+{
+  "enquetes": [
+    {
+      "id": "meurtre-jusiane",
+      "titre": "Le meurtre de Jusiane",
+      "description": "Une riche héritière retrouvée morte dans son manoir. Tout le monde est suspect.",
+      "chapitres": [
+        {
+          "numero": 1,
+          "titre": "La scène de crime",
+          "histoire": "Tu arrives sur place. Le corps est près de la cheminée. Un verre de vin est renversé...",
+          "indices": [
+            {"type": "image", "url": "indices/verre.jpg", "description": "Un verre de vin avec des traces de poudre blanche."},
+            {"type": "texte", "contenu": "Note retrouvée dans la poche : 'Rendez-vous à 22h. — M'"}
+          ],
+          "enigme": {
+            "question": "Quel est le code du coffre-fort trouvé derrière le tableau ? (Indice : l'année de mariage de Jusiane)",
+            "reponse_attendue": "1984"
+          }
+        },
+        {
+          "numero": 2,
+          "titre": "L'interrogatoire",
+          "histoire": "Le mari et le majordome ont des alibis, mais quelque chose cloche...",
+          "enigme": {
+            "question": "Qui ment ? (Tape 'mari' ou 'majordome')",
+            "reponse_attendue": "majordome"
+          }
+        }
+      ],
+      "conclusion": {
+        "question_finale": "Qui est le meurtrier et quel était le mobile ?",
+        "coupable_attendu": "le majordome",
+        "texte_victoire": "Bravo inspectrice ! Tu as démasqué le coupable. Place au dessert !",
+        "texte_defaite": "Ce n'est pas la bonne personne... Regarde à nouveau les indices !"
+      }
+    }
+  ]
+}
