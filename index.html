@@ -369,41 +369,40 @@
                         <div class="progress-container">
                             <div class="progress-header">
                                 <span class="progress-label" id="case1-resume-label">Progression</span>
-                                <span class="progress-percentage" id="case1-percentage">10%</span>
+                                <span class="progress-percentage" id="case1-percentage">0%</span>
                             </div>
                             <div class="progress-bar-bg">
-                                <div class="progress-bar-fill" id="case1-progress-fill" style="width: 10%;"></div>
+                                <div class="progress-bar-fill" id="case1-progress-fill" style="width: 0%;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </a>
 
-            <!-- ENQUETE 2 : L'OMBRE DE L'OPÉRA (Locked until completion) -->
-            <a href="#" class="case-link" id="case2-link" onclick="handleLockedCaseClick(); return false;">
-                <div class="case-card" id="case2-card" style="opacity: 0.5;">
+            <!-- ENQUETE 2 : L'OMBRE DE L'OPÉRA -->
+            <a href="#" id="case2-link" class="case-link" onclick="handleCase2Click(event)">
+                <div class="case-card" id="case2-card">
                     <div class="case-image-wrapper noir-overlay-2">
                         <div class="image-overlay"></div>
-                        <div class="case-badge locked">Verrouillé</div>
+                        <div class="case-badge" id="case2-badge">A faire</div>
                         <div class="card-graphic">
                             <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#aa7c11" stroke-width="1">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
                             </svg>
                         </div>
                     </div>
                     <div class="case-content">
                         <div class="case-meta">Dossier #0514</div>
                         <h3 class="case-title">L'Ombre de l'Opéra</h3>
-                        <p class="case-description">La cantatrice principale disparaît mystérieusement en plein milieu de l'acte III devant mille spectateurs impuissants...</p>
+                        <p class="case-description">La cantatrice principale a disparu. Dans sa loge, un masque de velours noir et une partition annotée d'un étrange code...</p>
                         
                         <div class="progress-container">
                             <div class="progress-header">
-                                <span class="progress-label">Progression</span>
-                                <span class="progress-percentage">0%</span>
+                                <span class="progress-label" id="case2-resume-label">Progression</span>
+                                <span class="progress-percentage" id="case2-percentage">0%</span>
                             </div>
                             <div class="progress-bar-bg">
-                                <div class="progress-bar-fill" style="width: 0%;"></div>
+                                <div class="progress-bar-fill" id="case2-progress-fill" style="width: 0%;"></div>
                             </div>
                         </div>
                     </div>
@@ -419,87 +418,81 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Lecture de la progression réelle depuis le LocalStorage
-            // maxChapterUnlocked est stocké de 1 à 10 au fil du jeu
+            // --- LOGIQUE ENQUÊTE 1 (ARTHUR) ---
+            // Si aucune donnée n'existe, on initialise à 10%
+            if (localStorage.getItem('maxChapterUnlocked') === null) {
+                localStorage.setItem('maxChapterUnlocked', '1');
+            }
+
+            // --- LOGIQUE ENQUÊTE 1 (ARTHUR/JUSIANE) ---
+            // On récupère la progression réelle
             let maxChapter = parseInt(localStorage.getItem('maxChapterUnlocked')) || 0;
-            
-            // Si la progression n'existe pas encore, on initialise à 1 (Chapitre 1 accessible)
-            if (maxChapter === 0) {
-                maxChapter = 1;
-            }
 
-            // Calcul du pourcentage :
-            // Le jeu contient 10 Chapitres au total.
-            // On calcule le pourcentage en fonction du chapitre maximum atteint.
-            // S'il est au chapitre 10, il a 100% de progression une fois l'aventure résolue.
+            // Si le joueur est à 0, c'est un nouveau joueur (0%)
+            // Sinon, on calcule son avancement
             let progressPercentage = 0;
-            if (maxChapter === 1) {
-                // Le joueur débute (intro + chapitre 1 non résolu)
-                progressPercentage = 10;
-            } else if (maxChapter > 1 && maxChapter < 10) {
-                // Progression linéaire de 20% à 90%
-                progressPercentage = maxChapter * 10;
-            } else if (maxChapter >= 10) {
-                // Chapitre X atteint ou résolu
-                progressPercentage = 100;
+
+            if (maxChapter > 0) {
+                // Si maxChapter est 1, on veut 10% (débuté)
+                // S'il est > 1, on calcule linéairement
+                progressPercentage = (maxChapter >= 10) ? 100 : (maxChapter * 10);
+                if (progressPercentage == 10) {
+                    progressPercentage = 0;
+                };
             }
 
-            // Sélection et mise à jour des éléments DOM de l'enquête 1
-            const percentageElement = document.getElementById('case1-percentage');
-            const progressFillElement = document.getElementById('case1-progress-fill');
-            const resumeLabelElement = document.getElementById('case1-resume-label');
-            const caseLinkElement = document.getElementById('case1-link');
-            const badgeElement = document.getElementById('case1-badge');
-
-            // Mise à jour de l'affichage du pourcentage de complétion
-            if (percentageElement && progressFillElement) {
-                percentageElement.innerText = progressPercentage + "%";
-                progressFillElement.style.width = progressPercentage + "%";
-            }
-
-            // Mise à jour dynamique du lien pour directement RESUMER l'aventure au bon endroit !
-            if (caseLinkElement) {
-                if (progressPercentage === 100) {
-                    badgeElement.innerText = "Résolu";
-                    badgeElement.style.borderColor = "var(--accent-green)";
-                    badgeElement.style.color = "var(--accent-green)";
-                    resumeLabelElement.innerText = "Terminé";
-                    // Si résolu, cliquer sur la carte renvoie au procès final
-                    caseLinkElement.href = "jusiane/chapitre10.html";
-                } else if (maxChapter > 1) {
-                    badgeElement.innerText = "En cours";
-                    resumeLabelElement.innerText = "Reprendre";
-                    // Le renvoie directement au chapitre en cours d'investigation
-                    caseLinkElement.href = "jusiane/chapitre" + maxChapter + ".html";
+            // MISE À JOUR DU DOM            
+            percentageElement1 = document.getElementById("case1-percentage");
+            progressFillElement1 = document.getElementById("case1-progress-fill");
+            if (percentageElement1 && progressFillElement1) {
+                percentageElement1.innerText = progressPercentage + "%";
+                progressFillElement1.style.width = progressPercentage + "%";
+            };
+            caseLinkElement1 = document.getElementById('case1-link');
+            badgeElement1 = document.getElementById('case1-badge');
+            resumeLabelElement1 = document.getElementById('case1-resume-label');
+            if (caseLinkElement1) {
+                if (maxChapter >= 10) {
+                    badgeElement1.innerText = "Résolu";
+                } else if (maxChapter >= 2) {
+                    badgeElement1.innerText = "En cours";
+                    resumeLabelElement1.innerText = "Reprendre";
+                    caseLinkElement1.href = "jusiane/chapitre" + maxChapter + ".html";
                 } else {
-                    badgeElement.innerText = "Nouveau";
-                    resumeLabelElement.innerText = "Commencer";
-                    // Nouveau joueur : on l'envoie sur l'introduction du manoir
-                    caseLinkElement.href = "jusiane/debut.html";
-                }
-            }
+                    badgeElement1.innerText = "Nouveau";
+                    resumeLabelElement1.innerText = "Commencer";
+                    caseLinkElement1.href = "jusiane/debut.html";
+                };
+            };
 
-            // Débloquer l'enquête 2 si l'enquête 1 est complétée à 100% !
-            const case2Card = document.getElementById('case2-card');
-            if (progressPercentage === 100 && case2Card) {
-                case2Card.style.opacity = "1";
-                const lockedBadge = case2Card.querySelector('.case-badge.locked');
-                if (lockedBadge) {
-                    lockedBadge.className = "case-badge";
-                    lockedBadge.innerText = "Disponible";
-                    lockedBadge.style.borderColor = "var(--gold-primary)";
-                    lockedBadge.style.color = "var(--gold-light)";
-                }
-            }
+            updateCase2UI();
         });
 
-        // Gestion de la modale ou de l'alerte pour l'enquête verrouillée
-        function handleLockedCaseClick() {
-            let maxChapter = parseInt(localStorage.getItem('maxChapterUnlocked')) || 1;
-            if (maxChapter >= 10) {
-                alert("Félicitations ! Vous avez résolu l'affaire Lord Arthur. Le Dossier de l'Opéra est en cours de préparation par Scotland Yard !");
+        // Fonction de clic pour l'Opéra (accès libre)
+        function handleCase2Click(event) {
+            window.location.href = "opera/debut.html";
+        }
+
+        // Mise à jour de l'UI de l'Opéra
+        function updateCase2UI() {
+            const progress = parseInt(localStorage.getItem('case2_progress')) || 0;
+            const badge = document.getElementById('case2-badge');
+            const bar = document.getElementById('case2-progress-fill');
+            const text = document.getElementById('case2-percentage');
+            if (progress >= 8) {
+                badge.innerText = "Résolu";
+                progressPercentage2 = (progress >= 8) ? 100 : (progress * 10);
+                bar.style.width = progressPercentage2 + "%";
+                text.innerText = progressPercentage2 + "%";
+            } else if (progress > 0) {
+                badge.innerText = "En cours";
+                progressPercentage2 = (progress >= 8) ? 100 : (progress * 10);
+                bar.style.width = progressPercentage2 + "%";
+                text.innerText = progressPercentage2 + "%";
             } else {
-                alert("Ce dossier est actuellement classé SECRET.\n\nRésolvez l'enquête sur le meurtre de Lord Arthur (atteignez 100% de progression) pour débloquer cette nouvelle affaire.");
+                badge.innerText = "Nouveau";
+                bar.style.width = "0%";
+                text.innerText = "0%";
             }
         }
     </script>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre II - La Partition Maudite</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:wght@300;400;600&display=swap');
+
+        :root {
+            --gold-primary: #d4af37;
+            --bg-dark: #070708;
+            --bg-card: #121214;
+            --text-light: #e2e2e7;
+            --text-muted: #8e8e93;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-dark); color: var(--text-light); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        /* HEADER ORIGINAL ET FIXE */
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); background: #000; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold-primary); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: var(--text-muted); font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { display: block; color: var(--text-light); text-decoration: none; font-size: 0.85rem; padding: 8px 12px; font-family: 'Cinzel', serif; }
+
+        .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px 15px; }
+        .story-section { background: var(--bg-card); border: 1px solid rgba(212, 175, 55, 0.1); border-radius: 8px; padding: 22px; }
+        
+        .grid-data { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0; }
+        .data-item { border: 1px solid #333; padding: 15px; text-align: center; font-family: monospace; font-size: 0.9rem; }
+        .input-code { width: 100%; padding: 12px; background: #000; border: 1px solid var(--gold-primary); color: #fff; text-align: center; text-transform: uppercase; }
+        .btn-submit { width: 100%; margin-top: 15px; padding: 15px; background: var(--gold-primary); border: none; font-family: 'Cinzel', serif; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre II</div>
+        <nav class="nav-overlay" id="navMenu">
+            <a href="../index.html">🏠 Retour à l'accueil</a>
+            <a href="chapitre1.html">• Chapitre I : La Loge</a>
+            <a href="chapitre2.html">• Chapitre II : La Partition</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="story-section">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 10px;">L'Empreinte Fragmentée</h2>
+            <p style="font-size: 0.9rem; line-height: 1.6;">L'empreinte digitale prélevée sur la partition est incomplète. Vous avez récupéré les points de structure, mais ils ne correspondent à aucun nom connu dans les dossiers. Vous devez comparer les points avec le registre des employés.</p>
+
+            <div class="grid-data">
+                <div class="data-item">P: 44-82-19</div>
+                <div class="data-item">L: 12-05-99</div>
+                <div class="data-item">M: 88-21-44</div>
+                <div class="data-item">D: 91-03-22</div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Le suspect est celui dont la somme des points de structure est la plus élevée. Entrez son initiale.</p>
+            <input type="text" id="suspectInput" class="input-code" maxlength="1">
+            <button class="btn-submit" onclick="checkSuspect()">IDENTIFIER</button>
+            <div id="feedback" style="margin-top: 10px; color: #ff4d4d; text-align: center; font-size: 0.8rem;"></div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            
+            // 1. On récupère la progression (défaut : 1 si on est au chap 1)
+            const maxUnlocked = parseInt(localStorage.getItem('case2_progress')) || 1;
+            
+            // 2. On construit le menu dynamiquement
+            let html = '<a href="../index.html">🏠 Retour à l\'accueil</a>';
+            
+            // On affiche uniquement les chapitres jusqu'au maxUnlocked
+            for (let i = 1; i <= maxUnlocked; i++) {
+                // Adapte le nom de tes fichiers si besoin (ici chapitre1.html, chapitre2.html...)
+                html += `<a href="chapitre${i}.html">• Chapitre ${i}</a>`;
+                console.log(localStorage.getItem('case2_progress'));
+            }
+
+            menu.innerHTML = html;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function checkSuspect() {
+            // Le joueur doit calculer : 
+            // P: 145, L: 116, M: 153, D: 116.
+            // Le plus élevé est M (153).
+            const input = document.getElementById('suspectInput').value.toUpperCase();
+            if (input === 'M') {
+                localStorage.setItem('case2_progress', '3');
+                window.location.href = "chapitre3.html";
+            } else {
+                document.getElementById('feedback').innerText = "Analyse erronée. Le suspect ne correspond pas aux données.";
+            }
+        }
+    </script>
+</body>
+</html>

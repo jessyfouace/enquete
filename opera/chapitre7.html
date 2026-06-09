@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre VII - La Confrontation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+        :root { --gold: #d4af37; --bg: #070708; --text: #e2e2e7; }
+        body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); background: #000; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: #8e8e93; font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { display: block; color: var(--text); text-decoration: none; font-size: 0.85rem; padding: 8px 12px; font-family: 'Cinzel', serif; }
+
+        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        .suspect-dialogue { background: #121214; padding: 20px; border: 1px solid var(--gold); margin-bottom: 20px; font-style: italic; }
+        .evidence-btn { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; cursor: pointer; }
+        .evidence-btn:hover { border-color: var(--gold); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre VII</div>
+        <nav class="nav-overlay" id="navMenu"></nav>
+    </header>
+
+    <div class="container">
+        <h1 style="font-family:'Cinzel'; text-align:center; color:var(--gold);">L'interrogatoire</h1>
+        <div class="suspect-dialogue">
+            "Je vous l'ai déjà dit, je n'ai jamais mis les pieds sur scène ce soir-là. J'étais dans mon bureau toute la soirée !"
+        </div>
+        <p style="text-align:center; margin-bottom:20px;">Quelle preuve utilisez-vous pour contredire son alibi ?</p>
+        
+        <button class="evidence-btn" onclick="checkAnswer('wrong')">Le registre des entrées</button>
+        <button class="evidence-btn" onclick="checkAnswer('correct')">L'ordre de mission secret</button>
+        <button class="evidence-btn" onclick="checkAnswer('wrong')">Le manteau taché d'encre</button>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const maxUnlocked = parseInt(localStorage.getItem('case2_progress')) || 7;
+            let html = '<a href="../index.html">🏠 Accueil</a>';
+            for (let i = 1; i <= maxUnlocked; i++) { html += `<a href="chapitre${i}.html">• Chapitre ${i}</a>`; }
+            menu.innerHTML = html;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function checkAnswer(status) {
+            if(status === 'correct') {
+                alert("Le suspect se fige. Il ne peut nier l'ordre de mission.");
+                localStorage.setItem('case2_progress', '8');
+                window.location.href = "chapitre8.html";
+            } else {
+                alert("Cette preuve ne le contredit pas directement. Il maintient sa version.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre IV - Inspection des Lieux</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+
+        :root { --gold: #d4af37; --bg: #070708; --text: #e2e2e7; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        /* HEADER ORIGINAL ET FIXE */
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); background: #000; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: #8e8e93; font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { display: block; color: var(--text); text-decoration: none; font-size: 0.85rem; padding: 8px 12px; font-family: 'Cinzel', serif; }
+
+        /* DESIGN RICHE ET MOBILE-FIRST */
+        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        h1 { font-family: 'Cinzel', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 15px; text-align: center; }
+        
+        .blueprint { position: relative; width: 100%; height: 280px; background: #0a0a0a; border: 1px solid #333; margin: 20px 0; overflow: hidden; }
+        .room { position: absolute; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Cinzel'; font-size: 0.65rem; color: var(--gold); background: rgba(212, 175, 55, 0.05); cursor: pointer; transition: 0.4s; }
+        .room:active { background: var(--gold); color: #000; }
+        
+        #vestiaire { top: 10px; left: 10px; width: 40%; height: 30%; }
+        #loge { top: 10px; right: 10px; width: 50%; height: 45%; }
+        #scene { bottom: 10px; left: 10px; width: 60%; height: 40%; }
+        #bureau { bottom: 10px; right: 10px; width: 30%; height: 45%; }
+
+        .clue-panel { background: #121214; padding: 20px; border-left: 3px solid var(--gold); margin-bottom: 20px; font-size: 0.85rem; font-style: italic; min-height: 70px; }
+        .input-group { display: flex; flex-direction: column; gap: 10px; }
+        input { background: #000; border: 1px solid var(--gold); padding: 15px; color: #fff; text-align: center; text-transform: uppercase; }
+        button { padding: 15px; background: var(--gold); border: none; font-family: 'Cinzel', serif; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre IV</div>
+        <nav class="nav-overlay" id="navMenu"></nav>
+    </header>
+
+    <div class="container">
+        <h1>Analyse Architecturale</h1>
+        <div class="blueprint">
+            <div id="vestiaire" class="room" onclick="inspect('vestiaire')">VESTIAIRE</div>
+            <div id="loge" class="room" onclick="inspect('loge')">LOGE</div>
+            <div id="scene" class="room" onclick="inspect('scene')">SCÈNE</div>
+            <div id="bureau" class="room" onclick="inspect('bureau')">BUREAU</div>
+        </div>
+
+        <div id="journal" class="clue-panel">Sélectionnez une zone du plan pour débuter l'inspection...</div>
+
+        <div class="input-group">
+            <input type="text" id="finalAnswer" placeholder="DÉDUCTION FINALE">
+            <button onclick="checkEnigma()">VALIDER L'HYPOTHÈSE</button>
+            <p id="hint" style="font-size: 0.7rem; color: #8e8e93; text-align: center; display: none;">
+                INDICE : Action délibérée visant à détruire un mécanisme.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const maxUnlocked = parseInt(localStorage.getItem('case2_progress')) || 4;
+            let html = '<a href="../index.html">🏠 Accueil</a>';
+            for (let i = 1; i <= maxUnlocked; i++) { html += `<a href="chapitre${i}.html">• Chapitre ${i}</a>`; }
+            menu.innerHTML = html;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        let findings = new Set();
+        function inspect(room) {
+            const data = {
+                vestiaire: "Clé de sécurité retrouvée dans une doublure.",
+                loge: "Mécanisme caché découvert sous le parquet.",
+                scene: "Câble rongé par de l'acide corrosif.",
+                bureau: "Ordre de mission secret pour 22h30."
+            };
+            document.getElementById('journal').innerText = data[room];
+            findings.add(room);
+            if(findings.size === 4) document.getElementById('hint').style.display = 'block';
+        }
+
+        function checkEnigma() {
+            if(document.getElementById('finalAnswer').value.toLowerCase() === "sabotage") {
+                localStorage.setItem('case2_progress', '5');
+                window.location.href = "chapitre5.html";
+            } else {
+                document.getElementById('journal').innerText = "Analyse erronée. Les preuves contredisent cette hypothèse. Commançant par SA....GE";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre V - La Mécanique</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+        :root { --gold: #d4af37; --bg: #070708; --text: #e2e2e7; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); background: #000; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: #8e8e93; font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { display: block; color: var(--text); text-decoration: none; font-size: 0.85rem; padding: 8px 12px; font-family: 'Cinzel', serif; }
+
+        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        h1 { font-family: 'Cinzel', serif; color: var(--gold); text-align: center; margin-bottom: 20px; }
+        .timeline-item { background: #121214; border: 1px solid #333; padding: 15px; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+        .timeline-item:hover { border-color: var(--gold); }
+        .btn-submit { width: 100%; padding: 15px; background: var(--gold); border: none; font-family: 'Cinzel'; font-weight: 700; margin-top: 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre V</div>
+        <nav class="nav-overlay" id="navMenu"></nav>
+    </header>
+
+    <div class="container">
+        <h1>Chronologie du Sabotage</h1>
+        <p style="font-size: 0.85rem; margin-bottom: 20px; text-align: center;">Reconstituez l'ordre des faits (cliquez sur les éléments dans l'ordre chronologique) :</p>
+        
+        <div id="sequence">
+            <div class="timeline-item" onclick="addEvent(1)">1. Ouverture de la trappe</div>
+            <div class="timeline-item" onclick="addEvent(2)">2. Application de l'acide</div>
+            <div class="timeline-item" onclick="addEvent(3)">3. Utilisation de la clé</div>
+            <div class="timeline-item" onclick="addEvent(4)">4. Signature du chèque</div>
+        </div>
+
+        <div id="displayOrder" style="margin: 20px 0; text-align: center; color: var(--gold);">Ordre actuel : </div>
+        <button class="btn-submit" onclick="checkSequence()">VALIDER LA SÉQUENCE</button>
+    </div>
+
+    <script>
+        let sequence = [];
+        function addEvent(id) {
+            if(!sequence.includes(id)) {
+                sequence.push(id);
+                document.getElementById('displayOrder').innerText = "Ordre actuel : " + sequence.join(" → ");
+            }
+        }
+
+        function checkSequence() {
+            // L'ordre logique est : Chèque (préparation) -> Clé (accès) -> Acide (sabotage) -> Trappe (action finale)
+            if(sequence.join("") === "4321") {
+                localStorage.setItem('case2_progress', '6');
+                window.location.href = "chapitre6.html";
+            } else {
+                alert("La chronologie est illogique. Réessayez.");
+                sequence = [];
+                document.getElementById('displayOrder').innerText = "Ordre actuel : ";
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const maxUnlocked = parseInt(localStorage.getItem('case2_progress')) || 5;
+            let html = '<a href="../index.html">🏠 Accueil</a>';
+            for (let i = 1; i <= maxUnlocked; i++) { html += `<a href="chapitre${i}.html">• Chapitre ${i}</a>`; }
+            menu.innerHTML = html;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+    </script>
+</body>
+</html>

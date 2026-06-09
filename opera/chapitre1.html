@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre I - La Loge de la Diva</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+
+        :root {
+            --gold-primary: #d4af37;
+            --bg-dark: #070708;
+            --bg-card: #121214;
+            --text-light: #e2e2e7;
+            --text-muted: #8e8e93;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-dark); color: var(--text-light); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        /* Header restauré */
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold-primary); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: var(--text-muted); font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { color: var(--text-light); text-decoration: none; font-size: 0.85rem; font-family: 'Cinzel', serif; }
+
+        .container { max-width: 480px; margin: 0 auto; padding: 20px 15px; }
+        .story-section { background: var(--bg-card); border: 1px solid rgba(212, 175, 55, 0.1); padding: 22px; border-radius: 8px; margin-bottom: 20px; }
+        
+        .riddle-box { background: rgba(0,0,0,0.3); border: 1px solid #333; padding: 15px; margin: 20px 0; font-family: 'Cinzel', serif; text-align: center; }
+        .input-group { display: flex; gap: 10px; justify-content: center; }
+        input { width: 60px; padding: 10px; background: #000; border: 1px solid var(--gold-primary); color: #fff; text-align: center; font-size: 1.2rem; }
+        .btn-submit { width: 100%; margin-top: 20px; padding: 15px; background: var(--gold-primary); border: none; font-family: 'Cinzel', serif; font-weight: bold; cursor: pointer; }
+        #feedback { margin-top: 15px; text-align: center; font-size: 0.8rem; color: #ff4d4d; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre I</div>
+        <nav class="nav-overlay" id="navMenu">
+            <a href="../index.html">🏠 Retour à l'accueil</a>
+            <a href="chapitre1.html">• Chapitre I : La Loge</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="story-section">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 15px;">La Loge de la Diva</h2>
+            <p style="font-size: 0.9rem; line-height: 1.6;">La loge est silencieuse. Sur la partition de "La Tosca", trois notes sont cerclées de rouge : <b>DO, MI, SOL</b>. Au dos, cette mention : <em>"L'anomalie réside dans l'intervalle manquant entre les notes."</em></p>
+            
+            <div class="riddle-box">
+                <p style="margin-bottom:10px;">DO (1) — ? — SOL (5)</p>
+                <input type="number" id="n1" placeholder="?">
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center;">Identifiez la valeur de la note manquante.</p>
+
+            <button class="btn-submit" onclick="check()">RÉVÉLER LE MÉCANISME</button>
+            <div id="feedback"></div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            
+            // 1. On récupère la progression (défaut : 1 si on est au chap 1)
+            const maxUnlocked = parseInt(localStorage.getItem('case2_progress')) || 1;
+            
+            // 2. On construit le menu dynamiquement
+            let html = '<a href="../index.html">🏠 Retour à l\'accueil</a>';
+            
+            // On affiche uniquement les chapitres jusqu'au maxUnlocked
+            for (let i = 1; i <= maxUnlocked; i++) {
+                // Adapte le nom de tes fichiers si besoin (ici chapitre1.html, chapitre2.html...)
+                html += `<a href="chapitre${i}.html">• Chapitre ${i}</a>`;
+            }
+            
+            menu.innerHTML = html;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+
+        function check() {
+            const val = document.getElementById('n1').value;
+            // L'intervalle entre DO(1) et SOL(5) pour une triade majeure est MI(3)
+            if (val === '3') {
+                localStorage.setItem('case2_progress', '2');
+                window.location.href = "chapitre2.html";
+            } else {
+                document.getElementById('feedback').innerText = "La résonance est fausse. Le mécanisme ne cède pas.";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -148,19 +148,30 @@
 
     <div class="welcome-container">
         <div class="badge">Dossier Confidentiel</div>
-        <h1>LE MEURTRE DE</h1>
-        <div class="subtitle">JUSIANE DE LESSEPS</div>
+        <h1>L'AFFAIRE</h1>
+        <div class="subtitle">LORD ARTHUR</div>
         
         <div class="divider"></div>
         
         <p class="synopsis">
-            <strong>Manoir des Cyprès, 22h45.</strong> Le corps sans vie de Jusiane a été retrouvé dans son salon. La haute société crie à l'accident, mais les indices sur place racontent une tout autre histoire. Mensonges croisés, faux alibis et pièces secrètes... Serez-vous capable de reconstituer les pièces de ce puzzle macabre et de démasquer l'assassin ? 10 chapitres vous séparent de la vérité.
+            <strong>Manoir des Cyprès, 22h45.</strong> Lord Arthur a été retrouvé sans vie dans son cabinet de travail. La porte était verrouillée de l'intérieur, la fenêtre close, et pourtant, l'arme du crime a disparu. La famille évoque un malaise cardiaque, mais le désordre dans ses dossiers secrets pointe vers un meurtre prémédité. Serez-vous capable de reconstituer les pièces de ce puzzle macabre et de démasquer l'assassin ? 10 chapitres vous séparent de la vérité.
         </p>
 
-        <a href="chapitre1.html" class="btn-start">Ouvrir l'Enquête ➔</a>
+        <!-- Appel de la fonction pour initialiser le jeu à 10% seulement quand on commence -->
+        <a href="chapitre1.html" class="btn-start" onclick="startArthur()">Ouvrir l'Enquête ➔</a>
         
         <div class="warning-text">Réservé au personnel de la police criminelle</div>
     </div>
+
+    <script>
+        function startArthur() {
+            // Si le joueur n'a jamais commencé, on initialise à 1 (Chapitre 1)
+            // Cela fera automatiquement afficher 10% sur ton index.html grâce à ta logique
+            if (!localStorage.getItem('maxChapterUnlocked')) {
+                localStorage.setItem('maxChapterUnlocked', '1');
+            }
+        }
+    </script>
 
 </body>
 </html>

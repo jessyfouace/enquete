@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre VIII - Dénouement</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+        :root { --gold: #d4af37; --bg: #070708; --text: #e2e2e7; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); background: #000; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: #8e8e93; font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { display: block; color: var(--text); text-decoration: none; font-size: 0.85rem; padding: 8px 12px; font-family: 'Cinzel', serif; }
+
+        .container { padding: 40px 20px; max-width: 500px; margin: 0 auto; text-align: center; }
+        h1 { font-family: 'Cinzel', serif; color: var(--gold); margin-bottom: 30px; }
+        .option-btn { display: block; width: 100%; padding: 15px; margin: 10px 0; background: transparent; border: 1px solid var(--gold); color: var(--text); font-family: 'Cinzel'; cursor: pointer; transition: 0.4s; }
+        .option-btn:hover { background: var(--gold); color: #000; }
+        
+        #feedback { margin-top: 30px; padding: 20px; border: 1px solid #333; min-height: 100px; display: none; transition: 0.5s; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre VIII</div>
+        <nav class="nav-overlay" id="navMenu"></nav>
+    </header>
+
+    <div class="container">
+        <h1>Le Rapport Final</h1>
+        <div id="interaction-area">
+            <p id="prompt-text" style="margin-bottom: 20px;">Désignez le coupable :</p>
+            <div id="choices">
+                <button class="option-btn" onclick="selectSuspect('Dumont')">Dumont (Le Machiniste)</button>
+                <button class="option-btn" onclick="selectSuspect('Directeur')">Le Directeur de l'Opéra</button>
+            </div>
+        </div>
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        let choiceSuspect = "";
+
+        function selectSuspect(name) {
+            choiceSuspect = name;
+            document.getElementById('prompt-text').innerText = "Quel était son mobile ?";
+            document.getElementById('choices').innerHTML = `
+                <button class="option-btn" onclick="conclude('Appât du gain')">Appât du gain</button>
+                <button class="option-btn" onclick="conclude('Vengeance personnelle')">Vengeance personnelle</button>
+            `;
+        }
+
+        function conclude(motif) {
+            const feedback = document.getElementById('feedback');
+            document.getElementById('interaction-area').style.display = 'none';
+            feedback.style.display = 'block';
+
+            if(choiceSuspect === 'Dumont' && motif === 'Appât du gain') {
+                feedback.innerHTML = "<h2 style='color:var(--gold)'>Justice est faite</h2><p>Le commissaire acquiesce. Dumont est menotté. Votre enquête est un succès total.</p><button class='option-btn' style='margin-top:20px;' onclick='location.href=\"victoire.html\"'>CLÔTURER LE DOSSIER</button>";
+            } else {
+                feedback.innerHTML = "<h2 style='color:red'>Dossier rejeté</h2><p>Le commissaire n'est pas convaincu. Vous avez laissé passer des détails cruciaux.</p><button class='option-btn' style='margin-top:20px;' onclick='location.reload()'>REPRENDRE L'ENQUÊTE</button>";
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+    </script>
+</body>
+</html>

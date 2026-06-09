@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dossier Résolu - Archive Finale</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+        :root { --gold: #d4af37; --bg: #070708; --text: #e2e2e7; }
+        body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; line-height: 1.6; padding: 20px; }
+        .report-card { max-width: 600px; margin: 0 auto; border: 1px solid var(--gold); padding: 30px; background: #0c0c0c; }
+        h1 { font-family: 'Cinzel'; color: var(--gold); text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+        h2 { font-family: 'Cinzel'; color: var(--gold); margin-top: 25px; font-size: 1.1rem; }
+        .highlight { color: var(--gold); font-weight: bold; }
+        .step { margin-bottom: 15px; padding: 10px; border-left: 2px solid #333; }
+    </style>
+</head>
+<body>
+
+<div class="report-card">
+    <h1>Archive de l'Enquête : Opéra</h1>
+    
+    <p>Félicitations, Inspecteur. Voici le résumé des preuves qui ont conduit à la <span class="highlight">condamnation de Dumont</span>.</p>
+
+    <h2>Chronologie des Preuves</h2>
+    
+    <div class="step">
+        • <span class="highlight">Chapitre 1-4 (L'Inspection)</span> : La <span class="highlight">clé de sécurité</span> et le <span class="highlight">câble à l'acide</span> ont prouvé la préméditation technique.
+    </div>
+    <div class="step">
+        • <span class="highlight">Chapitre 5 (Chronologie)</span> : Replacer la <span class="highlight">signature du chèque</span> avant l'acte a démontré le mobile financier.
+    </div>
+    <div class="step">
+        • <span class="highlight">Chapitre 6 (Déchiffrement)</span> : Le code <span class="highlight">SALOPE</span> a révélé le nom de code du projet de sabotage.
+    </div>
+    <div class="step">
+        • <span class="highlight">Chapitre 7 (Confrontation)</span> : L'<span class="highlight">ordre de mission</span> a brisé l'alibi du suspect, rendant sa culpabilité indiscutable.
+    </div>
+
+    <h2>Conclusion du Commissaire</h2>
+    <p>Le suspect, <span class="highlight">Dumont</span>, a agi par <span class="highlight">appât du gain</span>, utilisant ses accès de machiniste pour orchestrer un accident mortel sur scène. Vos déductions ont permis d'éviter une tragédie irréparable.</p>
+
+    <button style="width:100%; padding:15px; background:var(--gold); border:none; margin-top:20px; cursor:pointer;" onclick="location.href='../index.html'">RETOUR AUX ARCHIVES</button>
+    <button style="width:100%; padding:15px; background:#444; border:none; margin-top:10px; cursor:pointer; color:white; font-family:'Cinzel';" 
+        onclick="resetGame()">REINITIALISER L'ENQUÊTE</button>
+</div>
+
+<script>
+    function resetGame() {
+        // Supprime la progression stockée
+        localStorage.removeItem('case2_progress');
+        
+        // Redirige vers le chapitre 1
+        window.location.href = "debut.html";
+    }
+</script>
+</body>
+</html>

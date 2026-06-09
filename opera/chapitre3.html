@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre III - La Logique des Ombres</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:wght@300;400;600&display=swap');
+        :root { --gold-primary: #d4af37; --bg-dark: #070708; --bg-card: #121214; --text-light: #e2e2e7; --text-muted: #8e8e93; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-dark); color: var(--text-light); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); background: #000; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold-primary); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: var(--text-muted); font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { display: block; color: var(--text-light); text-decoration: none; font-size: 0.85rem; padding: 8px 12px; font-family: 'Cinzel', serif; }
+
+        .container { width: 100%; max-width: 500px; margin: 0 auto; padding: 20px 15px; }
+        .story-section { background: var(--bg-card); border: 1px solid rgba(212, 175, 55, 0.1); border-radius: 8px; padding: 22px; }
+        
+        .dossier { background: rgba(255,255,255,0.03); padding: 15px; margin: 20px 0; font-size: 0.8rem; border: 1px solid #333; }
+        .input-code { width: 100%; padding: 12px; background: #000; border: 1px solid var(--gold-primary); color: #fff; text-align: center; text-transform: uppercase; }
+        .btn-submit { width: 100%; margin-top: 15px; padding: 15px; background: var(--gold-primary); border: none; font-family: 'Cinzel', serif; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre III</div>
+        <nav class="nav-overlay" id="navMenu"></nav>
+    </header>
+
+    <main class="container">
+        <section class="story-section">
+            <h2 style="font-family: 'Cinzel', serif; margin-bottom: 10px;">Enquête : Chronologie</h2>
+            <p style="font-size: 0.85rem;">Quatre employés sont passés dans la loge. Leur temps de passage suit une suite logique (en minutes) : <b>12, 15, 21, 33, ?</b>. Le coupable est celui dont le temps de passage correspond au chiffre manquant.</p>
+
+            <div class="dossier">
+                <p><b>Moreau</b> (Costumier) : 45 min</p>
+                <p><b>Vasseur</b> (Éclairagiste) : 57 min</p>
+                <p><b>Lefebvre</b> (Machiniste) : 62 min</p>
+                <p><b>Dumont</b> (Régisseur) : 48 min</p>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Entrez le nom de famille du coupable :</p>
+            <input type="text" id="suspectInput" class="input-code" placeholder="NOM DU SUSPECT">
+            <button class="btn-submit" onclick="checkSuspect()">DÉNONCER</button>
+            <div id="feedback" style="margin-top: 10px; color: #ff4d4d; text-align: center; font-size: 0.8rem;"></div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const maxUnlocked = parseInt(localStorage.getItem('case2_progress')) || 3;
+            let html = '<a href="../index.html">🏠 Retour à l\'accueil</a>';
+            for (let i = 1; i <= maxUnlocked; i++) {
+                html += `<a href="chapitre${i}.html">• Chapitre ${i}</a>`;
+            }
+            menu.innerHTML = html;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function checkSuspect() {
+            // Logique de suite : 
+            // 12 (+3) = 15
+            // 15 (+6) = 21
+            // 21 (+12) = 33
+            // 33 (+24) = 57
+            // Le résultat est 57, donc Vasseur.
+            const input = document.getElementById('suspectInput').value.toLowerCase();
+            if (input === 'vasseur') {
+                localStorage.setItem('case2_progress', '4');
+                window.location.href = "chapitre4.html";
+            } else {
+                document.getElementById('feedback').innerText = "Analyse chronologique invalide.";
+            }
+        }
+    </script>
+</body>
+</html>

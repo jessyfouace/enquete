@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chapitre VI - Le Carnet Codé</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400&display=swap');
+        :root { --gold: #d4af37; --bg: #070708; --text: #e2e2e7; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Montserrat', sans-serif; min-height: 100vh; }
+
+        header { padding: 15px; border-bottom: 1px solid rgba(212, 175, 55, 0.1); background: #000; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100; }
+        .btn-menu { color: var(--gold); background: none; border: none; font-size: 0.85rem; text-transform: uppercase; font-family: 'Cinzel', serif; cursor: pointer; }
+        .case-number { font-family: 'Cinzel', serif; color: #8e8e93; font-size: 0.8rem; }
+        .nav-overlay { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #000; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding: 15px; flex-direction: column; gap: 10px; }
+        .nav-overlay a { display: block; color: var(--text); text-decoration: none; font-size: 0.85rem; padding: 8px 12px; font-family: 'Cinzel', serif; }
+
+        .container { padding: 20px; max-width: 500px; margin: 0 auto; }
+        .crypto-box { background: #121214; padding: 20px; border: 1px solid var(--gold); text-align: center; margin-bottom: 20px; }
+        .encoded-text { font-family: monospace; font-size: 1.5rem; letter-spacing: 5px; color: var(--gold); }
+        input { width: 100%; padding: 15px; background: #000; border: 1px solid #444; color: white; text-align: center; margin-bottom: 10px; }
+        button { width: 100%; padding: 15px; background: var(--gold); border: none; font-family: 'Cinzel'; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="btn-menu" onclick="toggleMenu()">☰ Menu</button>
+        <div class="case-number">Chapitre VI</div>
+        <nav class="nav-overlay" id="navMenu"></nav>
+    </header>
+
+    <div class="container">
+        <h1 style="font-family: 'Cinzel'; text-align: center; margin-bottom: 20px;">Déchiffrement</h1>
+        <p style="font-size: 0.85rem; margin-bottom: 20px;">Le carnet contient ce message chiffré (décalage de 4 rangs dans l'alphabet) :</p>
+        
+        <div class="crypto-box">
+            <div class="encoded-text">VDORSH</div>
+        </div>
+
+        <input type="text" id="decodedAnswer" placeholder="MESSAGE DÉCODÉ">
+        <button onclick="checkCode()">DÉCRYPTER</button>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const maxUnlocked = parseInt(localStorage.getItem('case2_progress')) || 6;
+            let html = '<a href="../index.html">🏠 Accueil</a>';
+            for (let i = 1; i <= maxUnlocked; i++) { html += `<a href="chapitre${i}.html">• Chapitre ${i}</a>`; }
+            menu.innerHTML = html;
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function checkCode() {
+            // V -> S, D -> A, O -> L, R -> O, S -> P, H -> E
+            if(document.getElementById('decodedAnswer').value.toLowerCase() === "salope") {
+                localStorage.setItem('case2_progress', '7');
+                window.location.href = "chapitre7.html";
+            } else {
+                alert("Déchiffrement incorrect.");
+            }
+        }
+    </script>
+</body>
+</html>

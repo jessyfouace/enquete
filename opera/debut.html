@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dossier Noire : L'Ombre de l'Opéra</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Montserrat:wght@300;400;600&display=swap');
+
+        :root {
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa7c11;
+            --bg-dark: #070708;
+            --bg-card: #121214;
+            --text-light: #e2e2e7;
+            --text-muted: #8e8e93;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .welcome-container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .badge { font-family: 'Cinzel', serif; color: var(--gold-primary); font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 20px; }
+
+        h1 { font-family: 'Cinzel', serif; font-size: 1.6rem; color: #fff; margin-bottom: 15px; }
+
+        .synopsis { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 30px; font-style: italic; }
+
+        .btn-start {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-primary));
+            color: #000;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-container">
+        <div class="badge">DOSSIER #0514 - CONFIDENTIEL</div>
+        <h1>L'OMBRE DE L'OPÉRA</h1>
+        
+        <p class="synopsis">
+            La diva a disparu avant le lever du rideau. Dans sa loge, un masque de velours noir et une partition annotée d'un code indéchiffrable. Les projecteurs sont braqués sur la scène, mais c'est dans l'obscurité des coulisses que se cache la vérité. 
+            <br><br><strong>Prêt à lever le rideau sur ce mystère ?</strong>
+        </p>
+
+        <a href="chapitre1.html" id="start-btn" class="btn-start" onclick="initEnquete()">Commencer l'Enquête ➔</a>
+    </div>
+
+    <script>
+        function initEnquete() {
+            // Initialisation spécifique à l'enquête 2
+            if (!localStorage.getItem('case2_current_chapter')) {
+                localStorage.setItem('case2_current_chapter', '1');
+                localStorage.setItem('case2_progress', '0');
+            }
+        }
+        if (localStorage.getItem('case2_progress') >= 8) {
+            window.location.href = "victoire.html";        
+        };
+        // Optionnel : Changer le texte du bouton si l'enquête a déjà commencé
+        window.onload = () => {
+            if (localStorage.getItem('case2_progress')) {
+                document.getElementById('start-btn').innerText = "Reprendre l'Enquête ➔";
+                // On récupère la progression, par défaut on va au chapitre 1
+                let progress = localStorage.getItem('case2_progress') || "1";
+
+                // On cible le bouton et on met à jour son lien de destination
+                const startBtn = document.getElementById('start-btn');
+                startBtn.href = "chapitre" + progress + ".html";
+
+                // Optionnel : si tu veux aussi changer le texte du bouton proprement
+                startBtn.innerText = "Reprendre l'Enquête ➔";
+            };
+        };
+    </script>
+</body>
+</html>
